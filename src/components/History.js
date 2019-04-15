@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios, { post } from "axios";
+import axios, { post, get } from "axios";
 import ReactSvgPieChart from "react-svg-piechart";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
@@ -16,6 +16,7 @@ class History extends Component {
     this.onChange = this.onChange.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
+    this.getList = this.getList.bind(this);
   }
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
@@ -56,46 +57,16 @@ class History extends Component {
     this.setState({ data: [] });
   }
 
+  getList() {
+    const url = "https://secret-river-30602.herokuapp.com/get_past_scenarios";
+    return get(url);
+  }
+
   render() {
-    var paddingData = this.state.data.length > 0 ? "0px" : "0px";
-    return (
-      <div style={{ padding: paddingData, textAlign: "center" }}>
-        <form style={{ padding: "0px" }} onSubmit={this.onFormSubmit}>
-          <h1>Upload the numpy file representing the space platform</h1>
-          <br />
-          <br />
-          <input
-            type="file"
-            name="name"
-            onChange={this.onChange}
-            className="InputFile"
-          />
-          <Button variant="contained" color="primary" type="submit">
-            Load chart
-          </Button>
-        </form>
-        <div
-          style={{
-            height: "250px",
-            width: "250px",
-            display: "inline-block",
-            padding: "50px"
-          }}
-        >
-          <ReactSvgPieChart
-            data={this.state.data}
-            // If you need expand on hover (or touch) effect
-            expandOnHover={true}
-            expandSize={1}
-            shrinkOnTouchEnd={false}
-            strokeColor="#fff"
-            strokeLinejoin="round"
-            strokeWidth={1}
-            viewBoxSize={100}
-          />
-        </div>
-      </div>
-    );
+    this.getList().then(response => {
+      console.log(response.data);
+    });
+    return <div style={{ textAlign: "center" }}>Hey</div>;
   }
 }
 
