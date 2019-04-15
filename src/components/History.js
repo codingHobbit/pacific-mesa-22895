@@ -9,7 +9,6 @@ class History extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null,
       data: []
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -62,10 +61,14 @@ class History extends Component {
     return get(url);
   }
 
-  render() {
+  componentWillMount() {
     this.getList().then(response => {
-      console.log(response.data);
+      this.setState({ data: response.data });
     });
+  }
+
+  render() {
+    if (this.state.data.result.length > 0) console.log(this.state.data);
     return <div style={{ textAlign: "center" }}>Hey</div>;
   }
 }
