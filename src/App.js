@@ -9,9 +9,6 @@ class App extends Component {
         <div style={{ textAlign: "center" }}>
           <Home />
         </div>
-        <footer className="App-footer">
-          <p>2019-2020 | TrapWater.com</p>
-        </footer>
       </div>
     );
   }
